@@ -102,7 +102,7 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 .dv-ends{display:flex;justify-content:space-between;font-size:14px;color:var(--soft)}
 /* the shelf */
 :root{--H:min(40vh,27vw)}
-@media (max-width:767px){:root{--H:min(56vw,38svh)}}
+@media (max-width:767px){:root{--H:min(56vw,36svh)}}
 .shelfview{min-height:100svh;display:flex;flex-direction:column;align-items:center;padding:22px 0 26px;gap:6px;overflow:hidden}
 .top{width:100%;max-width:1180px;padding:0 24px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px 28px;flex-wrap:wrap}
 .brand{display:grid;gap:4px}
@@ -172,8 +172,9 @@ body.reading .shelfview{visibility:hidden}
 .book .name input{max-width:240px}
 .endbar{display:flex;justify-content:center;padding-top:20px;border-top:2px dashed var(--line)}
 .step{scroll-margin-top:80px}
-@media (max-width:767px){.m-title{font-size:20px;height:3.8em}.top{padding:0 16px}.top .name input{max-width:170px}.arrow{width:44px;height:44px}.cta #openBtn{font-size:20px;padding:10px 22px}.back{font-size:17px;padding:7px 16px}.bk-tag{font-size:14px;padding:3px 10px}}
+@media (max-width:767px){.shelfview{padding-top:14px;gap:2px}.top h1{font-size:36px}.top .kicker{font-size:15px}.top .wave{display:none}.top .name label{font-size:18px}.top .name input{padding:6px 10px}.shelf{height:calc(var(--H) + 56px)}.m-title{font-size:20px;height:3.8em}.top{padding:0 16px}.top .name input{max-width:170px}.arrow{width:44px;height:44px}.cta #openBtn{font-size:20px;padding:10px 22px}.back{font-size:17px;padding:7px 16px}.bk-tag{font-size:14px;padding:3px 10px}}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .plank{background:#4a6470;border-color:#58737f}:root:not([data-theme="light"]) .end{background:#58737f}}
+@media (max-height:520px) and (min-width:568px){:root{--H:52vh}.shelfview{padding:8px 0 12px;gap:0}.top .kicker,.top .wave{display:none}.top h1{font-size:28px}.top .name label{font-size:17px}.top .name input{padding:5px 10px}.shelf{height:calc(var(--H) + 34px);margin-top:0}.m-kick{display:none}.m-title{font-size:19px;height:1.4em}.m-title span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.m-state{font-size:14px}.cta{margin-top:0}.cta #openBtn{font-size:18px;padding:7px 20px}.arrow{width:40px;height:40px}}
 @media (max-width:640px){.lab-2col{grid-template-columns:1fr}.lab-2col>svg{max-height:240px;width:100%}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style></head><body>
@@ -905,7 +906,10 @@ body.reading .shelfview{visibility:hidden}
   var down = null, dragging = false, moved = false;
   shelf.addEventListener('pointerdown', function (e) {
     if (e.button !== 0 || isOpen >= 0) return;
-    down = { x: e.clientX, T: T, target: e.target.closest('.bk') }; moved = false;
+    // the turned cover is a 3D face the browser does not hit-test reliably, so a tap inside its box counts as a tap on it
+    var tgt = e.target.closest('.bk'), a = clamp(Math.round(s), 0, N - 1), cr = coverRect(a);
+    if (e.clientX >= cr.left && e.clientX <= cr.right && e.clientY >= cr.top && e.clientY <= cr.bottom) tgt = books[a];
+    down = { x: e.clientX, T: T, target: tgt }; moved = false;
   });
   window.addEventListener('pointermove', function (e) {
     mx = e.clientX; my = e.clientY;
