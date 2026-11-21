@@ -10,8 +10,8 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{direction:rtl}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:20px;line-height:1.6;padding:36px 16px 80px}
-.wrap{max-width:860px;margin:0 auto;display:grid;gap:40px}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:20px;line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;display:grid;gap:26px;padding:28px 16px 90px}
 header{display:grid;gap:12px}
 .kicker{font-size:17px;color:var(--teal);margin:0}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,7vw,64px);line-height:1.05;margin:0}
@@ -29,9 +29,8 @@ nav.prog a{display:flex;align-items:center;gap:8px;text-decoration:none;color:va
 nav.prog a b{font-family:var(--display);font-weight:400;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--sand);color:#264653}
 nav.prog a[data-s="draft"] b{background:var(--gold)}
 nav.prog a[data-s="done"] b{background:var(--teal);color:#FBF5ED}
-section.ch{display:grid;gap:20px;padding-top:28px;border-top:2px dashed var(--line)}
 .vhead{display:flex;gap:16px;align-items:flex-start}
-.vnum{flex:none;font-family:var(--display);font-size:34px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#FBF5ED;display:grid;place-items:center}
+.vnum{flex:none;font-family:var(--display);font-size:34px;width:56px;height:56px;border-radius:50%;background:var(--c,var(--accent));color:var(--cf,#FBF5ED);display:grid;place-items:center}
 h2{font-family:var(--display);font-weight:400;font-size:clamp(26px,4vw,34px);line-height:1.2;margin:4px 0 0;text-wrap:balance}
 .intro{margin:0;max-width:62ch}
 .after{display:grid;gap:20px}
@@ -101,29 +100,144 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 .track::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--fg);opacity:.55}
 .fill{position:absolute;top:0;bottom:0;border-radius:9px}
 .dv-ends{display:flex;justify-content:space-between;font-size:14px;color:var(--soft)}
+/* the shelf */
+:root{--H:min(40vh,27vw)}
+@media (max-width:767px){:root{--H:min(56vw,38svh)}}
+.shelfview{min-height:100svh;display:flex;flex-direction:column;align-items:center;padding:22px 0 26px;gap:6px;overflow:hidden}
+.top{width:100%;max-width:1180px;padding:0 24px;display:flex;justify-content:space-between;align-items:flex-end;gap:14px 28px;flex-wrap:wrap}
+.brand{display:grid;gap:4px}
+.top .wave{width:170px;height:12px}
+.top .name input{max-width:220px;padding:8px 12px}
+.top .name label{font-size:21px}
+.shelf{position:relative;width:100%;height:calc(var(--H) + 80px);perspective:2200px;perspective-origin:50% 45%;touch-action:pan-y;cursor:grab;flex:none;margin-top:4px}
+.shelf.grab{cursor:grabbing}
+.probe{position:absolute;width:0;height:var(--H);visibility:hidden}
+.plank{position:absolute;left:0;right:0;top:calc(50% + var(--H)/2 + 8px);height:14px;background:#E6D3B9;border-top:2px solid #d8c09f;box-shadow:0 14px 24px -14px rgba(38,70,83,.55)}
+.stage{position:absolute;left:50%;top:calc(50% + 8px);width:0;height:0;transform-style:preserve-3d}
+.bk{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d;outline:none;-webkit-tap-highlight-color:transparent}
+.face{position:absolute;top:calc(var(--H)/-2);height:var(--H);backface-visibility:hidden;outline:1.5px solid rgba(38,70,83,.18);outline-offset:-1.5px;-webkit-backface-visibility:hidden;background:var(--c);color:var(--cf);border-radius:3px 4px 4px 3px;overflow:hidden;user-select:none}
+.face::after{content:'';position:absolute;inset:0;background:#0d1a20;opacity:var(--sh,0);pointer-events:none}
+.sp{width:var(--ws);left:calc(var(--ws)/-2);transform:translateZ(calc(var(--d)/2));--sh:var(--shs);display:flex;flex-direction:column;align-items:center;padding:calc(var(--H)*.05) 0 calc(var(--H)*.04);gap:calc(var(--H)*.025);box-shadow:inset 3px 0 0 rgba(255,255,255,.12),inset -3px 0 0 rgba(0,0,0,.12)}
+.sn2{font-family:var(--display);font-weight:400;font-size:calc(var(--ws)*.42);line-height:1;width:calc(var(--ws)*.66);height:calc(var(--ws)*.66);border-radius:50%;border:2px solid currentColor;display:grid;place-items:center}
+.band{width:100%;height:3px;background:currentColor;opacity:.4;flex:none}
+.st{flex:1;min-height:0;writing-mode:vertical-rl;font-family:var(--display);font-size:calc(var(--ws)*.34);line-height:1.1;white-space:nowrap;overflow:hidden;text-align:center}
+.sp .ic{width:calc(var(--ws)*.56);height:auto;flex:none;stroke-width:6}
+.rib{position:absolute;top:0;left:18%;width:calc(var(--ws)*.2);height:calc(var(--H)*.13);background:#E9C46A;clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%);display:none}
+.bk[data-s="draft"] .rib{display:block}
+.bk[data-s="done"] .rib{display:block;background:#8fd3c4}
+.bk[style*="#E9C46A"] .rib{background:#264653}
+.cv{width:var(--d);left:calc(var(--d)/-2);transform:rotateY(-90deg) translateZ(calc(var(--ws)/2));--sh:var(--shc);box-shadow:0 30px 60px -28px rgba(20,16,10,.55);display:grid;grid-template-rows:auto 1fr auto auto;justify-items:center;text-align:center;padding:calc(var(--H)*.07) calc(var(--H)*.05) calc(var(--H)*.06);gap:calc(var(--H)*.02)}
+.cv::before{content:'';position:absolute;inset:calc(var(--H)*.025);border:2px solid currentColor;opacity:.3;border-radius:4px;pointer-events:none}
+.ck{font-size:calc(var(--H)*.045);letter-spacing:.02em;opacity:.9}
+.cv .ic{width:calc(var(--d)*.5);height:auto;align-self:center}
+.ct{font-family:var(--display);font-size:calc(var(--H)*.085);line-height:1.05;text-wrap:balance}
+.cf{font-size:calc(var(--H)*.032);opacity:.8}
+.cn{position:absolute;bottom:calc(var(--H)*.05);left:calc(var(--H)*.055);font-family:var(--display);font-weight:400;font-size:calc(var(--H)*.06);opacity:.55}
+.bk:focus-visible .face{outline:3px solid var(--accent);outline-offset:3px}
+.end{position:absolute;left:0;top:calc(var(--H)/2 - var(--H)*.42);width:calc(var(--H)*.06);margin-left:calc(var(--H)*-.03);height:calc(var(--H)*.42);background:#d8c09f;border-radius:6px 6px 0 0;box-shadow:inset 0 3px 0 rgba(255,255,255,.35)}
+.caption{display:grid;justify-items:center;gap:4px;text-align:center;padding:0 16px}
+.mask{overflow:hidden;position:relative;width:min(92vw,760px)}
+.mask span{display:block}
+.mask span+span{position:absolute;inset:0}
+.m-kick{color:var(--teal);font-size:18px;height:1.6em}
+.m-title{font-family:var(--display);font-size:clamp(22px,2.8vw,32px);line-height:1.2;height:2.5em}
+.m-title span{display:flex;align-items:center;justify-content:center;height:100%;text-wrap:balance}
+.m-state{font-size:16px;color:var(--soft);height:1.6em}
+.cta{display:flex;align-items:center;gap:14px;margin-top:6px}
+.cta #openBtn{font-size:23px;padding:12px 30px;background:var(--accent);color:#FBF5ED;transition:opacity .3s}
+.cta #openBtn.dim{opacity:.6}
+.arrow{width:50px;height:50px;padding:0;display:grid;place-items:center;background:transparent;color:var(--fg);border:1.5px solid var(--line)}
+.arrow svg{width:20px;height:12px}
+details.howto{width:min(92vw,640px);margin-top:10px;font-size:18px}
+details.howto summary{cursor:pointer;color:var(--teal);text-align:center;list-style:none}
+details.howto summary::-webkit-details-marker{display:none}
+details.howto ul{margin:10px 0 0}
+.shelf-foot{font-size:15px;color:var(--soft);text-align:center;padding:0 16px;margin:8px 0 0;max-width:640px}
+/* a book, open */
+body.reading{overflow:hidden}
+body.reading .shelfview{visibility:hidden}
+.book{position:fixed;inset:0;z-index:50;overflow-y:auto;background:var(--bg);overscroll-behavior:contain}
+.flap{position:fixed;inset:0;background:var(--c);opacity:0;pointer-events:none;z-index:5}
+.bar-top{position:sticky;top:0;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;background:var(--bg);border-bottom:1.5px solid var(--line)}
+.back{display:inline-flex;align-items:center;gap:10px;font-size:19px;padding:8px 20px;white-space:nowrap}
+.back svg{width:18px;height:10px}
+.bk-tag{white-space:nowrap;font-size:16px;border-radius:999px;padding:3px 14px;background:var(--c);color:var(--cf)}
+.trail{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.trail button{font-family:var(--body);font-size:16px;background:var(--card);color:var(--fg);border:1.5px solid var(--line);padding:4px 14px 4px 8px;display:flex;align-items:center;gap:8px}
+.trail i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--sand);color:#264653;font-size:14px}
+.trail [data-s="done"] i{background:var(--teal);color:#FBF5ED;font-size:0}
+.trail [data-s="done"] i::after{content:'✓';font-size:14px}
+.trail [data-s="now"] button{border-color:var(--accent);border-width:2px}
+.book .name{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;background:var(--tint);border-radius:14px;padding:12px 16px}
+.book .name input{max-width:240px}
+.endbar{display:flex;justify-content:center;padding-top:20px;border-top:2px dashed var(--line)}
+.step{scroll-margin-top:80px}
+@media (max-width:767px){.m-title{font-size:20px;height:3.8em}.top{padding:0 16px}.top .name input{max-width:170px}.arrow{width:44px;height:44px}.cta #openBtn{font-size:20px;padding:10px 22px}.back{font-size:17px;padding:7px 16px}.bk-tag{font-size:14px;padding:3px 10px}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .plank{background:#4a6470;border-color:#58737f}:root:not([data-theme="light"]) .end{background:#58737f}}
 @media (max-width:640px){.lab-2col{grid-template-columns:1fr}.lab-2col>svg{max-height:240px;width:100%}}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style></head><body>
-<div class="wrap">
-<header>
-<p class="kicker">סדרה של 5 סרטונים ומשימת סיום</p>
-<h1>מי שולט בזמן?</h1>
-<svg class="wave" viewBox="0 0 220 14" aria-hidden="true"><path d="M2 7 C 20 -1, 35 15, 55 7 S 90 -1, 110 7 S 145 15, 165 7 S 200 -1, 218 7" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
-<p>כל פרק מתחיל בחידה, ובנוי תמיד באותו סדר.</p>
+<main class="shelfview" id="shelfview">
+<header class="top">
+<div class="brand"><p class="kicker">5 סרטונים ומשימת סיום</p><h1>מי שולט בזמן?</h1>
+<svg class="wave" viewBox="0 0 220 14" aria-hidden="true"><path d="M2 7 C 20 -1, 35 15, 55 7 S 90 -1, 110 7 S 145 15, 165 7 S 200 -1, 218 7" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></div>
+<div class="name"><label for="who">השם שלי</label><input id="who" class="who" type="text" maxlength="60" autocomplete="given-name"></div>
+</header>
+<section class="shelf" id="shelf" aria-label="מדף הספרים">
+<div class="probe" id="probe"></div>
+<div class="plank"></div>
+<div class="stage"><div class="end end-r"></div><div class="end end-l"></div>
+<div class="bk" role="button" tabindex="0" data-n="1" data-kick="ספר 1" data-title="אם השעון וכדור הארץ לא מסכימים מה השעה, את מי מתקנים?" aria-label="ספר 1: אם השעון וכדור הארץ לא מסכימים מה השעה, את מי מתקנים?" style="--c:#264653;--cf:#FBF5ED">
+<div class="face sp"><i class="rib" aria-hidden="true"></i><b class="sn2">1</b><span class="band"></span><span class="st">את מי מתקנים?</span><span class="band"></span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="52" r="32"/><path d="M50 52V32M50 52l14 8"/><path d="M50 20v5M50 79v5M18 52h5M77 52h5"/><path d="M74 14a44 44 0 0 1 12 18"/><path d="M80 32l6 0 0-6"/></svg></div>
+<div class="face cv"><span class="ck">ספר 1</span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="52" r="32"/><path d="M50 52V32M50 52l14 8"/><path d="M50 20v5M50 79v5M18 52h5M77 52h5"/><path d="M74 14a44 44 0 0 1 12 18"/><path d="M80 32l6 0 0-6"/></svg><span class="ct">את מי מתקנים?</span><span class="cf">ניחוש · סרטון · מעבדה · שאלות</span><b class="cn">1</b></div>
+</div>
+<div class="bk" role="button" tabindex="0" data-n="2" data-kick="ספר 2" data-title="מה הקשר בין הגאות בים, אורך היום והמרחק לירח?" aria-label="ספר 2: מה הקשר בין הגאות בים, אורך היום והמרחק לירח?" style="--c:#2A9D8F;--cf:#FBF5ED">
+<div class="face sp"><i class="rib" aria-hidden="true"></i><b class="sn2">2</b><span class="band"></span><span class="st">הירח, הגאות והיום</span><span class="band"></span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="42" cy="56" rx="36" ry="26" stroke-dasharray="6 7"/><circle cx="42" cy="56" r="22"/><circle cx="88" cy="22" r="7" fill="currentColor"/></svg></div>
+<div class="face cv"><span class="ck">ספר 2</span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="42" cy="56" rx="36" ry="26" stroke-dasharray="6 7"/><circle cx="42" cy="56" r="22"/><circle cx="88" cy="22" r="7" fill="currentColor"/></svg><span class="ct">הירח, הגאות והיום</span><span class="cf">ניחוש · סרטון · מעבדה · שאלות</span><b class="cn">2</b></div>
+</div>
+<div class="bk" role="button" tabindex="0" data-n="3" data-kick="ספר 3" data-title="איך חלקיק שחי בממוצע 2 מיליוניות שנייה חוצה 15 ק״מ של אטמוספרה?" aria-label="ספר 3: איך חלקיק שחי בממוצע 2 מיליוניות שנייה חוצה 15 ק״מ של אטמוספרה?" style="--c:#E76F51;--cf:#FBF5ED">
+<div class="face sp"><i class="rib" aria-hidden="true"></i><b class="sn2">3</b><span class="band"></span><span class="st">המיואון שהגיע</span><span class="band"></span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 90L38 42l14 18 12-14 30 44z"/><path d="M74 6v34" stroke-dasharray="5 6"/><circle cx="74" cy="46" r="4" fill="currentColor"/></svg></div>
+<div class="face cv"><span class="ck">ספר 3</span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 90L38 42l14 18 12-14 30 44z"/><path d="M74 6v34" stroke-dasharray="5 6"/><circle cx="74" cy="46" r="4" fill="currentColor"/></svg><span class="ct">המיואון שהגיע</span><span class="cf">ניחוש · סרטון · מעבדה · שאלות</span><b class="cn">3</b></div>
+</div>
+<div class="bk" role="button" tabindex="0" data-n="4" data-kick="ספר 4" data-title="אם כל אחד רואה את השעון של האחר מתקתק לאט, מי חוזר צעיר יותר?" aria-label="ספר 4: אם כל אחד רואה את השעון של האחר מתקתק לאט, מי חוזר צעיר יותר?" style="--c:#E9C46A;--cf:#264653">
+<div class="face sp"><i class="rib" aria-hidden="true"></i><b class="sn2">4</b><span class="band"></span><span class="st">התאומים</span><span class="band"></span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M50 92V10"/><path d="M50 92L80 51 50 10"/><circle cx="50" cy="92" r="5" fill="currentColor"/><circle cx="50" cy="10" r="5" fill="currentColor"/></svg></div>
+<div class="face cv"><span class="ck">ספר 4</span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M50 92V10"/><path d="M50 92L80 51 50 10"/><circle cx="50" cy="92" r="5" fill="currentColor"/><circle cx="50" cy="10" r="5" fill="currentColor"/></svg><span class="ct">התאומים</span><span class="cf">ניחוש · סרטון · מעבדה · שאלות</span><b class="cn">4</b></div>
+</div>
+<div class="bk" role="button" tabindex="0" data-n="5" data-kick="ספר 5" data-title="מה אנחנו מרגישים כשאנחנו מרגישים משקל?" aria-label="ספר 5: מה אנחנו מרגישים כשאנחנו מרגישים משקל?" style="--c:#7B4B2A;--cf:#FBF5ED">
+<div class="face sp"><i class="rib" aria-hidden="true"></i><b class="sn2">5</b><span class="band"></span><span class="st">משקל, גובה וזמן</span><span class="band"></span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M50 4v16"/><rect x="24" y="20" width="52" height="70" rx="4"/><circle cx="50" cy="42" r="6"/><path d="M50 48v20M50 68l-7 14M50 68l7 14M50 54l-10 8M50 54l10 8"/></svg></div>
+<div class="face cv"><span class="ck">ספר 5</span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M50 4v16"/><rect x="24" y="20" width="52" height="70" rx="4"/><circle cx="50" cy="42" r="6"/><path d="M50 48v20M50 68l-7 14M50 68l7 14M50 54l-10 8M50 54l10 8"/></svg><span class="ct">משקל, גובה וזמן</span><span class="cf">ניחוש · סרטון · מעבדה · שאלות</span><b class="cn">5</b></div>
+</div>
+<div class="bk" role="button" tabindex="0" data-n="6" data-kick="ספר 6 · משימת הסיום" data-title="משימת הסיום: כוון את שעון הלוויין" data-mission="1" aria-label="ספר 6 · משימת הסיום: משימת הסיום: כוון את שעון הלוויין" style="--c:#1d3640;--cf:#E9C46A">
+<div class="face sp"><i class="rib" aria-hidden="true"></i><b class="sn2">6</b><span class="band"></span><span class="st">שעון הלוויין</span><span class="band"></span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 96q44-36 88 0"/><rect x="40" y="26" width="20" height="16" rx="2"/><path d="M10 29h26v10H10zM64 29h26v10H64z"/><path d="M50 46v26" stroke-dasharray="4 6"/></svg></div>
+<div class="face cv"><span class="ck">ספר 6 · משימת הסיום</span><svg class="ic" viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 96q44-36 88 0"/><rect x="40" y="26" width="20" height="16" rx="2"/><path d="M10 29h26v10H10zM64 29h26v10H64z"/><path d="M50 46v26" stroke-dasharray="4 6"/></svg><span class="ct">שעון הלוויין</span><span class="cf">מעבדה · משימות</span><b class="cn">6</b></div>
+</div>
+</div>
+</section>
+<div class="caption" aria-live="polite"><div class="mask m-kick"></div><div class="mask m-title"></div><div class="mask m-state"></div></div>
+<div class="cta">
+<button type="button" class="arrow" id="prevBtn" aria-label="הספר הקודם"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<button type="button" id="openBtn">לפתוח את ספר 1</button>
+<button type="button" class="arrow" id="nextBtn" aria-label="הספר הבא"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M5 1L1 5l4 4M1 5h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</div>
+<details class="howto"><summary>איך זה עובד?</summary>
 <ul class="how">
-<li>ניחוש, סרטון, מעבדה, שאלות, ובסוף: מה השתנה אצלי.</li>
+<li>כל ספר בנוי תמיד באותו סדר: ניחוש, סרטון, מעבדה, שאלות, ובסוף: מה השתנה אצלי.</li>
 <li>הניחוש לא מקבל ציון. ניחוש שגוי הוא חלק מהדרך.</li>
 <li>כשהסרטון מציע לעצור, אפשר לעצור ולנסות לבד לפני שממשיכים.</li>
-<li>התשובות נשמרות בזמן שאתה כותב. כשסיימת פרק, לחץ ״הגשתי״.</li>
+<li>התשובות נשמרות בזמן שאתה כותב, גם כשחוזרים למדף. כשסיימת ספר, לחץ ״הגשתי״.</li>
 <li>בשאלות חישוב, כתוב גם איך חישבת. הדרך חשובה כמו התשובה.</li>
-</ul>
-<div class="name"><label for="who">השם שלי</label><input id="who" type="text" maxlength="60" autocomplete="given-name"></div>
-<nav class="prog" aria-label="התקדמות"><a href="#v1" data-n="1"><b>1</b><span>לא התחלתי</span></a><a href="#v2" data-n="2"><b>2</b><span>לא התחלתי</span></a><a href="#v3" data-n="3"><b>3</b><span>לא התחלתי</span></a><a href="#v4" data-n="4"><b>4</b><span>לא התחלתי</span></a><a href="#v5" data-n="5"><b>5</b><span>לא התחלתי</span></a><a href="#v6" data-n="6"><b>★</b><span>לא התחלתי</span></a></nav>
-</header>
-<section class="ch" id="v1" data-n="1">
-<div class="vhead"><div class="vnum">1</div><h2>אם השעון וכדור הארץ לא מסכימים מה השעה, את מי מתקנים?</h2></div>
+</ul></details>
+<p class="shelf-foot">התשובות נשלחות רק למורה. אפשר לחזור ולתקן תשובה גם אחרי ההגשה, ואז ללחוץ שוב ״הגשתי״. את הניחוש אי אפשר לשנות אחרי שננעל.</p>
+</main>
+<section class="ch book" id="v1" data-n="1" role="dialog" aria-modal="true" aria-labelledby="v1-h" hidden style="--c:#264653;--cf:#FBF5ED">
+<div class="flap" aria-hidden="true"></div>
+<div class="bar-top"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button><span class="bk-tag">ספר 1</span></div>
+<div class="wrap">
+<div class="vhead rise"><div class="vnum">1</div><h2 id="v1-h">אם השעון וכדור הארץ לא מסכימים מה השעה, את מי מתקנים?</h2></div>
 
-<div class="step gate">
+<ol class="trail rise" aria-label="השלבים בספר"><li data-st="gate" data-to="v1-s-gate"><button type="button"><i>1</i>ניחוש</button></li><li data-st="film" data-to="v1-s-film"><button type="button"><i>2</i>סרטון</button></li><li data-st="lab" data-to="v1-s-lab"><button type="button"><i>3</i>מעבדה</button></li><li data-st="q" data-to="v1-s-q"><button type="button"><i>4</i>שאלות</button></li><li data-st="r" data-to="v1-s-r"><button type="button"><i>5</i>מה השתנה</button></li></ol>
+<div class="name rise" hidden><label for="v1-who">השם שלי</label><input id="v1-who" class="who" type="text" maxlength="60" autocomplete="given-name"><span class="note">כדי שהתשובות יגיעו אליי.</span></div>
+<div class="rise"><div class="step gate" id="v1-s-gate">
 <h3><span class="sn">1</span>ניחוש</h3>
 <p class="qt" id="v1-gq">שעון אטומי וכדור הארץ לא מסכימים מה השעה. את מי היית מתקן?</p>
 <div class="opts" role="radiogroup" aria-labelledby="v1-gq"><label><input type="radio" name="v1-p" id="v1-p0" value="את השעון"><span>את השעון</span></label><label><input type="radio" name="v1-p" id="v1-p1" value="את כדור הארץ"><span>את כדור הארץ</span></label><label><input type="radio" name="v1-p" id="v1-p2" value="אף אחד"><span>אף אחד</span></label></div>
@@ -132,15 +246,15 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 <div class="bar"><button type="button" class="lock">נעל את הניחוש</button><span class="gate-msg status err" role="status" aria-live="polite"></span></div>
 <p class="note gate-hint">הניחוש לא מקבל ציון, וניחוש שגוי הוא חלק מהדרך. אחרי הנעילה אי אפשר לשנות אותו, והסרטון נפתח.</p>
 <p class="locked" hidden>הניחוש שלך ננעל: <b></b> <span class="status lock-status" role="status" aria-live="polite"></span></p>
-</div>
+</div></div>
 <div class="after" hidden>
-<div class="step"><h3><span class="sn">2</span>הסרטון</h3><video controls preload="metadata" playsinline src="films/film1.mp4"><track kind="subtitles" srclang="he" label="כתוביות בעברית" src="films/film1.vtt" default></video></div>
-<div class="step"><h3><span class="sn">3</span>המעבדה: מד הפער</h3>
+<div class="step" id="v1-s-film"><h3><span class="sn">2</span>הסרטון</h3><video controls preload="metadata" playsinline src="films/film1.mp4"><track kind="subtitles" srclang="he" label="כתוביות בעברית" src="films/film1.vtt" default></video></div>
+<div class="step" id="v1-s-lab"><h3><span class="sn">3</span>המעבדה: מד הפער</h3>
 <div class="labbox" data-lab="gap"></div>
 <label class="qt" for="v1-lab">בין 1972 ל-2016 הוסיפו 27 שניות מעוברות, בערך אחת כל שנה וחצי. מצא במעבדה: בכמה אלפיות שנייה היה היום ארוך מדי, בממוצע, בשנים האלה?</label><textarea id="v1-lab" data-k="lab" data-req="1" maxlength="1200"></textarea></div>
-<div class="step"><h3><span class="sn">4</span>השאלות</h3>
+<div class="step" id="v1-s-q"><h3><span class="sn">4</span>השאלות</h3>
 <ol class="qs"><li><span class="kind" data-k2="חישוב">חישוב</span><label class="qt" for="v1-q1">נניח שכל יום ארוך ב־1 אלפית שנייה מ־86,400 שניות. בכמה שניות גדל הפער בין השעון לכדור הארץ בשנה אחת? ואחרי כמה שנים הוא יגיע לשעה?</label><p class="note">כתוב גם איזו הנחה הנחת.</p><textarea id="v1-q1" data-k="q1" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="מצא את החור">מצא את החור</span><label class="qt" for="v1-q2">מישהו אומר: ״ב־20 במאי 2027 כל השעונים בעולם יזוזו בשעה.״ מה לא נכון במשפט הזה?</label><textarea id="v1-q2" data-k="q2" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="ניבוי">ניבוי</span><label class="qt" for="v1-q3">למה שנייה מעוברת שלילית (דילוג על שנייה) מסוכנת למחשבים יותר מתוספת של שנייה?</label><textarea id="v1-q3" data-k="q3" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="העברה">העברה</span><label class="qt" for="v1-q4">אתה מתכנן בסיס קבוע על מאדים. היום שם (סול) ארוך בכ־40 דקות מהיום שלנו. לפי איזה זמן תנהל את הבסיס, ולמה?</label><textarea id="v1-q4" data-k="q4" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="אתגר רשות">אתגר רשות</span><label class="qt" for="v1-x">בתחילת הסרטון בחרת את מי מתקנים. כתוב תשובה משלך, גם אם היא שונה מההחלטה של הוועידה.</label><textarea id="v1-x" data-k="x" maxlength="1200"></textarea></li></ol></div>
-<div class="step"><h3><span class="sn">5</span>מה השתנה אצלי</h3>
+<div class="step" id="v1-s-r"><h3><span class="sn">5</span>מה השתנה אצלי</h3>
 <p class="mine">לפני הסרטון ניחשת: <b></b>. <span class="why"></span></p>
 <label class="qt" for="v1-r">מה אתה חושב עכשיו? ומה גרם לך לשנות את דעתך, או להישאר איתה?</label>
 <textarea id="v1-r" data-k="r" data-req="1" maxlength="800" class="short"></textarea>
@@ -149,11 +263,18 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 </div>
 <div class="bar"><button type="button" class="submit">הגשתי את פרק 1</button><span class="status" role="status" aria-live="polite"></span></div>
 </div>
+<div class="endbar"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button></div>
+</div>
 </section>
-<section class="ch" id="v2" data-n="2">
-<div class="vhead"><div class="vnum">2</div><h2>מה הקשר בין הגאות בים, אורך היום והמרחק לירח?</h2></div>
+<section class="ch book" id="v2" data-n="2" role="dialog" aria-modal="true" aria-labelledby="v2-h" hidden style="--c:#2A9D8F;--cf:#FBF5ED">
+<div class="flap" aria-hidden="true"></div>
+<div class="bar-top"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button><span class="bk-tag">ספר 2</span></div>
+<div class="wrap">
+<div class="vhead rise"><div class="vnum">2</div><h2 id="v2-h">מה הקשר בין הגאות בים, אורך היום והמרחק לירח?</h2></div>
 
-<div class="step gate">
+<ol class="trail rise" aria-label="השלבים בספר"><li data-st="gate" data-to="v2-s-gate"><button type="button"><i>1</i>ניחוש</button></li><li data-st="film" data-to="v2-s-film"><button type="button"><i>2</i>סרטון</button></li><li data-st="lab" data-to="v2-s-lab"><button type="button"><i>3</i>מעבדה</button></li><li data-st="q" data-to="v2-s-q"><button type="button"><i>4</i>שאלות</button></li><li data-st="r" data-to="v2-s-r"><button type="button"><i>5</i>מה השתנה</button></li></ol>
+<div class="name rise" hidden><label for="v2-who">השם שלי</label><input id="v2-who" class="who" type="text" maxlength="60" autocomplete="given-name"><span class="note">כדי שהתשובות יגיעו אליי.</span></div>
+<div class="rise"><div class="step gate" id="v2-s-gate">
 <h3><span class="sn">1</span>ניחוש</h3>
 <p class="qt" id="v2-gq">כדור הארץ מסתובב לאט יותר ויותר, בגלל הגאות. מה קורה באותו זמן לירח?</p>
 <div class="opts" role="radiogroup" aria-labelledby="v2-gq"><label><input type="radio" name="v2-p" id="v2-p0" value="הוא מתקרב אלינו"><span>הוא מתקרב אלינו</span></label><label><input type="radio" name="v2-p" id="v2-p1" value="הוא מתרחק מאיתנו"><span>הוא מתרחק מאיתנו</span></label><label><input type="radio" name="v2-p" id="v2-p2" value="הוא נשאר באותו מרחק"><span>הוא נשאר באותו מרחק</span></label></div>
@@ -162,15 +283,15 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 <div class="bar"><button type="button" class="lock">נעל את הניחוש</button><span class="gate-msg status err" role="status" aria-live="polite"></span></div>
 <p class="note gate-hint">הניחוש לא מקבל ציון, וניחוש שגוי הוא חלק מהדרך. אחרי הנעילה אי אפשר לשנות אותו, והסרטון נפתח.</p>
 <p class="locked" hidden>הניחוש שלך ננעל: <b></b> <span class="status lock-status" role="status" aria-live="polite"></span></p>
-</div>
+</div></div>
 <div class="after" hidden>
-<div class="step"><h3><span class="sn">2</span>הסרטון</h3><video controls preload="metadata" playsinline src="films/film2.mp4"><track kind="subtitles" srclang="he" label="כתוביות בעברית" src="films/film2.vtt" default></video></div>
-<div class="step"><h3><span class="sn">3</span>המעבדה: מי סוחב את מי</h3>
+<div class="step" id="v2-s-film"><h3><span class="sn">2</span>הסרטון</h3><video controls preload="metadata" playsinline src="films/film2.mp4"><track kind="subtitles" srclang="he" label="כתוביות בעברית" src="films/film2.vtt" default></video></div>
+<div class="step" id="v2-s-lab"><h3><span class="sn">3</span>המעבדה: מי סוחב את מי</h3>
 <div class="labbox" data-lab="tide"></div>
 <label class="qt" for="v2-lab">מצא מצב שבו שום דבר לא משתנה: הירח לא מתקרב ולא מתרחק. מה מיוחד במסלול כזה? רמז: לווייני תקשורת משתמשים בו.</label><textarea id="v2-lab" data-k="lab" data-req="1" maxlength="1200"></textarea></div>
-<div class="step"><h3><span class="sn">4</span>השאלות</h3>
+<div class="step" id="v2-s-q"><h3><span class="sn">4</span>השאלות</h3>
 <ol class="qs"><li><span class="kind" data-k2="חישוב">חישוב</span><label class="qt" for="v2-q1">הירח מתרחק בכ־3.8 ס״מ בשנה. כמה הוא התרחק מאז שנכחדו הדינוזאורים, לפני 66 מיליון שנה?</label><p class="note">ולמה התשובה היא רק הערכה?</p><textarea id="v2-q1" data-k="q1" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="מצא את החור">מצא את החור</span><label class="qt" for="v2-q2">הגאות מושכת את הירח קדימה במסלול, ובכל זאת ככל שהוא מתרחק, מהירות ההקפה שלו יורדת. איך זה ייתכן?</label><textarea id="v2-q2" data-k="q2" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="העברה">העברה</span><label class="qt" for="v2-q3">דיימוס, הירח השני של מאדים, מקיף אותו ב־30 שעות בערך. מאדים מסתובב סביב עצמו ב־24 שעות ו־37 דקות. מה צפוי לקרות לדיימוס? הסבר בעזרת הבליטה.</label><textarea id="v2-q3" data-k="q3" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="ניבוי">ניבוי</span><label class="qt" for="v2-q4">אם הגאות רק מאטה את כדור הארץ, למה הוא הסתובב מהר יותר בשנים האחרונות? הצע שני הסברים אפשריים.</label><p class="note">רמז: חזור לסרטון 1.</p><textarea id="v2-q4" data-k="q4" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="אתגר רשות">אתגר רשות</span><label class="qt" for="v2-x">צייר (או תאר) את מסלול הירח ביחס לשמש. האם הוא אי פעם נע ״אחורה״? מה זה אומר על הרעיון שהירח לא מקיף את כדור הארץ?</label><textarea id="v2-x" data-k="x" maxlength="1200"></textarea></li></ol></div>
-<div class="step"><h3><span class="sn">5</span>מה השתנה אצלי</h3>
+<div class="step" id="v2-s-r"><h3><span class="sn">5</span>מה השתנה אצלי</h3>
 <p class="mine">לפני הסרטון ניחשת: <b></b>. <span class="why"></span></p>
 <label class="qt" for="v2-r">מה אתה חושב עכשיו? ומה גרם לך לשנות את דעתך, או להישאר איתה?</label>
 <textarea id="v2-r" data-k="r" data-req="1" maxlength="800" class="short"></textarea>
@@ -179,11 +300,18 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 </div>
 <div class="bar"><button type="button" class="submit">הגשתי את פרק 2</button><span class="status" role="status" aria-live="polite"></span></div>
 </div>
+<div class="endbar"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button></div>
+</div>
 </section>
-<section class="ch" id="v3" data-n="3">
-<div class="vhead"><div class="vnum">3</div><h2>איך חלקיק שחי בממוצע 2 מיליוניות שנייה חוצה 15 ק״מ של אטמוספרה?</h2></div>
+<section class="ch book" id="v3" data-n="3" role="dialog" aria-modal="true" aria-labelledby="v3-h" hidden style="--c:#E76F51;--cf:#FBF5ED">
+<div class="flap" aria-hidden="true"></div>
+<div class="bar-top"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button><span class="bk-tag">ספר 3</span></div>
+<div class="wrap">
+<div class="vhead rise"><div class="vnum">3</div><h2 id="v3-h">איך חלקיק שחי בממוצע 2 מיליוניות שנייה חוצה 15 ק״מ של אטמוספרה?</h2></div>
 
-<div class="step gate">
+<ol class="trail rise" aria-label="השלבים בספר"><li data-st="gate" data-to="v3-s-gate"><button type="button"><i>1</i>ניחוש</button></li><li data-st="film" data-to="v3-s-film"><button type="button"><i>2</i>סרטון</button></li><li data-st="lab" data-to="v3-s-lab"><button type="button"><i>3</i>מעבדה</button></li><li data-st="q" data-to="v3-s-q"><button type="button"><i>4</i>שאלות</button></li><li data-st="r" data-to="v3-s-r"><button type="button"><i>5</i>מה השתנה</button></li></ol>
+<div class="name rise" hidden><label for="v3-who">השם שלי</label><input id="v3-who" class="who" type="text" maxlength="60" autocomplete="given-name"><span class="note">כדי שהתשובות יגיעו אליי.</span></div>
+<div class="rise"><div class="step gate" id="v3-s-gate">
 <h3><span class="sn">1</span>ניחוש</h3>
 <p class="qt" id="v3-gq">חלקיק נוצר בגובה 15 ק״מ ונע כמעט במהירות האור. בממוצע הוא מתפרק אחרי 2 מיליוניות שנייה. כמה חלקיקים כאלה מגיעים עד הקרקע?</p>
 <div class="opts" role="radiogroup" aria-labelledby="v3-gq"><label><input type="radio" name="v3-p" id="v3-p0" value="אף אחד"><span>אף אחד</span></label><label><input type="radio" name="v3-p" id="v3-p1" value="מעטים מאוד"><span>מעטים מאוד</span></label><label><input type="radio" name="v3-p" id="v3-p2" value="הרבה"><span>הרבה</span></label></div>
@@ -192,15 +320,15 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 <div class="bar"><button type="button" class="lock">נעל את הניחוש</button><span class="gate-msg status err" role="status" aria-live="polite"></span></div>
 <p class="note gate-hint">הניחוש לא מקבל ציון, וניחוש שגוי הוא חלק מהדרך. אחרי הנעילה אי אפשר לשנות אותו, והסרטון נפתח.</p>
 <p class="locked" hidden>הניחוש שלך ננעל: <b></b> <span class="status lock-status" role="status" aria-live="polite"></span></p>
-</div>
+</div></div>
 <div class="after" hidden>
-<div class="step"><h3><span class="sn">2</span>הסרטון</h3><video controls preload="metadata" playsinline src="films/film3.mp4"><track kind="subtitles" srclang="he" label="כתוביות בעברית" src="films/film3.vtt" default></video></div>
-<div class="step"><h3><span class="sn">3</span>המעבדה: שעון האור והמיואון</h3>
+<div class="step" id="v3-s-film"><h3><span class="sn">2</span>הסרטון</h3><video controls preload="metadata" playsinline src="films/film3.mp4"><track kind="subtitles" srclang="he" label="כתוביות בעברית" src="films/film3.vtt" default></video></div>
+<div class="step" id="v3-s-lab"><h3><span class="sn">3</span>המעבדה: שעון האור והמיואון</h3>
 <div class="labbox" data-lab="muon"></div>
 <label class="qt" for="v3-lab">מצא את המהירות שבה חצי מהמיואונים שנוצרו בגובה 15 ק״מ מגיעים לקרקע. פי כמה הזמן שלהם מתארך במהירות הזאת?</label><textarea id="v3-lab" data-k="lab" data-req="1" maxlength="1200"></textarea></div>
-<div class="step"><h3><span class="sn">4</span>השאלות</h3>
+<div class="step" id="v3-s-q"><h3><span class="sn">4</span>השאלות</h3>
 <ol class="qs"><li><span class="kind" data-k2="חישוב">חישוב</span><label class="qt" for="v3-q1">מיואון נע ב־99.5% ממהירות האור, והזמן שלו עובר לאט פי 10. כמה רחוק הוא מגיע בממוצע? האם זה מספיק כדי לרדת מפסגת הר וושינגטון (1,917 מטר) לגובה פני הים?</label><textarea id="v3-q1" data-k="q1" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="מצא את החור">מצא את החור</span><label class="qt" for="v3-q2">מישהו אומר: ״שעון אור הוא שעון מיוחד. שעון אטומי שטס לידו לא חייב להאט.״ הראה שזה מוביל לסתירה.</label><p class="note">רמז: מה יוכל לגלות נוסע בחללית סגורה, אם שני השעונים שלו לא יסכימים?</p><textarea id="v3-q2" data-k="q2" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="ניבוי">ניבוי</span><label class="qt" for="v3-q3">מנקודת המבט של המיואון, השעון שלו רגיל לגמרי, ובכל זאת הוא מגיע לקרקע. מה חייב להיות שונה מבחינתו? נחש ונמק, גם אם אינך בטוח.</label><textarea id="v3-q3" data-k="q3" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="העברה">העברה</span><label class="qt" for="v3-q4">בסרטון 1 נאמר: ״כל שעון צזיום בעולם סופר את אותה שנייה.״ אחרי הסרטון הזה, איך היית מדייק את המשפט?</label><textarea id="v3-q4" data-k="q4" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="אתגר רשות">אתגר רשות</span><label class="qt" for="v3-x">660 מטר הוא ממוצע, לא גבול: בכל 660 מטר שורדים בערך 37% מהמיואונים. איזה חלק שורד 1,320 מטר? ובערך איזה חלק היה שורד 15 ק״מ, בלי התארכות הזמן?</label><textarea id="v3-x" data-k="x" maxlength="1200"></textarea></li></ol></div>
-<div class="step"><h3><span class="sn">5</span>מה השתנה אצלי</h3>
+<div class="step" id="v3-s-r"><h3><span class="sn">5</span>מה השתנה אצלי</h3>
 <p class="mine">לפני הסרטון ניחשת: <b></b>. <span class="why"></span></p>
 <label class="qt" for="v3-r">מה אתה חושב עכשיו? ומה גרם לך לשנות את דעתך, או להישאר איתה?</label>
 <textarea id="v3-r" data-k="r" data-req="1" maxlength="800" class="short"></textarea>
@@ -209,11 +337,18 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 </div>
 <div class="bar"><button type="button" class="submit">הגשתי את פרק 3</button><span class="status" role="status" aria-live="polite"></span></div>
 </div>
+<div class="endbar"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button></div>
+</div>
 </section>
-<section class="ch" id="v4" data-n="4">
-<div class="vhead"><div class="vnum">4</div><h2>אם כל אחד רואה את השעון של האחר מתקתק לאט, מי חוזר צעיר יותר?</h2></div>
+<section class="ch book" id="v4" data-n="4" role="dialog" aria-modal="true" aria-labelledby="v4-h" hidden style="--c:#E9C46A;--cf:#264653">
+<div class="flap" aria-hidden="true"></div>
+<div class="bar-top"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button><span class="bk-tag">ספר 4</span></div>
+<div class="wrap">
+<div class="vhead rise"><div class="vnum">4</div><h2 id="v4-h">אם כל אחד רואה את השעון של האחר מתקתק לאט, מי חוזר צעיר יותר?</h2></div>
 
-<div class="step gate">
+<ol class="trail rise" aria-label="השלבים בספר"><li data-st="gate" data-to="v4-s-gate"><button type="button"><i>1</i>ניחוש</button></li><li data-st="film" data-to="v4-s-film"><button type="button"><i>2</i>סרטון</button></li><li data-st="lab" data-to="v4-s-lab"><button type="button"><i>3</i>מעבדה</button></li><li data-st="q" data-to="v4-s-q"><button type="button"><i>4</i>שאלות</button></li><li data-st="r" data-to="v4-s-r"><button type="button"><i>5</i>מה השתנה</button></li></ol>
+<div class="name rise" hidden><label for="v4-who">השם שלי</label><input id="v4-who" class="who" type="text" maxlength="60" autocomplete="given-name"><span class="note">כדי שהתשובות יגיעו אליי.</span></div>
+<div class="rise"><div class="step gate" id="v4-s-gate">
 <h3><span class="sn">1</span>ניחוש</h3>
 <p class="qt" id="v4-gq">תאום אחד טס לכוכב רחוק במהירות עצומה וחוזר. התאום השני נשאר בבית. מי צעיר יותר כשהם נפגשים?</p>
 <div class="opts" role="radiogroup" aria-labelledby="v4-gq"><label><input type="radio" name="v4-p" id="v4-p0" value="התאום שנסע"><span>התאום שנסע</span></label><label><input type="radio" name="v4-p" id="v4-p1" value="התאום שנשאר"><span>התאום שנשאר</span></label><label><input type="radio" name="v4-p" id="v4-p2" value="הם באותו גיל"><span>הם באותו גיל</span></label></div>
@@ -222,15 +357,15 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 <div class="bar"><button type="button" class="lock">נעל את הניחוש</button><span class="gate-msg status err" role="status" aria-live="polite"></span></div>
 <p class="note gate-hint">הניחוש לא מקבל ציון, וניחוש שגוי הוא חלק מהדרך. אחרי הנעילה אי אפשר לשנות אותו, והסרטון נפתח.</p>
 <p class="locked" hidden>הניחוש שלך ננעל: <b></b> <span class="status lock-status" role="status" aria-live="polite"></span></p>
-</div>
+</div></div>
 <div class="after" hidden>
-<div class="step"><h3><span class="sn">2</span>הסרטון</h3><video controls preload="metadata" playsinline src="films/film4.mp4"><track kind="subtitles" srclang="he" label="כתוביות בעברית" src="films/film4.vtt" default></video></div>
-<div class="step"><h3><span class="sn">3</span>המעבדה: מפת התאומים</h3>
+<div class="step" id="v4-s-film"><h3><span class="sn">2</span>הסרטון</h3><video controls preload="metadata" playsinline src="films/film4.mp4"><track kind="subtitles" srclang="he" label="כתוביות בעברית" src="films/film4.vtt" default></video></div>
+<div class="step" id="v4-s-lab"><h3><span class="sn">3</span>המעבדה: מפת התאומים</h3>
 <div class="labbox" data-lab="twins"></div>
 <label class="qt" for="v4-lab">הכוכב במרחק 12 שנות אור. הנוסע רוצה לחזור כשעברו אצלו בדיוק 10 שנים. באיזו מהירות עליו לטוס? וכמה שנים יעברו בבית?</label><textarea id="v4-lab" data-k="lab" data-req="1" maxlength="1200"></textarea></div>
-<div class="step"><h3><span class="sn">4</span>השאלות</h3>
+<div class="step" id="v4-s-q"><h3><span class="sn">4</span>השאלות</h3>
 <ol class="qs"><li><span class="kind" data-k2="חישוב">חישוב</span><label class="qt" for="v4-q1">תאום טס ב־60% ממהירות האור לכוכב שבמרחק 6 שנות אור, וחוזר מיד. במהירות הזאת הזמן שלו עובר לאט פי 1.25. כמה שנים עברו בבית? וכמה בחללית?</label><textarea id="v4-q1" data-k="q1" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="מצא את החור">מצא את החור</span><label class="qt" for="v4-q2">מישהו אומר: ״התאוצה היא מה שמאט לתאום את הזמן.״ תאר ניסוי שמראה שזה לא ההסבר.</label><p class="note">רמז: שלושה שעונים. אחד בבית, אחד טס החוצה, ושלישי טס פנימה ומעתיק את השעה מהשני כשהם חולפים זה על פני זה.</p><textarea id="v4-q2" data-k="q2" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="ניבוי">ניבוי</span><label class="qt" for="v4-q3">שני תאומים יוצאים מכדור הארץ לכיוונים הפוכים, באותה מהירות ולאותו מרחק, וחוזרים. מי צעיר יותר כשהם נפגשים? ומה לגבי אח שלישי שנשאר בבית?</label><textarea id="v4-q3" data-k="q3" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="העברה">העברה</span><label class="qt" for="v4-q4">מיואון שנוצר באטמוספרה ומגיע לקרקע (סרטון 3) דומה לאחד התאומים. לאיזה מהם? ומה ההבדל החשוב בין הסיפור שלו לסיפור של התאום?</label><textarea id="v4-q4" data-k="q4" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="אתגר רשות">אתגר רשות</span><label class="qt" for="v4-x">צייר דיאגרמת מרחב־זמן של הניסוי מ־1971, מנקודת מבט שלא מסתובבת עם כדור הארץ: המעבדה, המטוס שטס מזרחה והמטוס שטס מערבה. איזה קו הכי קרוב לישר?</label><textarea id="v4-x" data-k="x" maxlength="1200"></textarea></li></ol></div>
-<div class="step"><h3><span class="sn">5</span>מה השתנה אצלי</h3>
+<div class="step" id="v4-s-r"><h3><span class="sn">5</span>מה השתנה אצלי</h3>
 <p class="mine">לפני הסרטון ניחשת: <b></b>. <span class="why"></span></p>
 <label class="qt" for="v4-r">מה אתה חושב עכשיו? ומה גרם לך לשנות את דעתך, או להישאר איתה?</label>
 <textarea id="v4-r" data-k="r" data-req="1" maxlength="800" class="short"></textarea>
@@ -239,11 +374,18 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 </div>
 <div class="bar"><button type="button" class="submit">הגשתי את פרק 4</button><span class="status" role="status" aria-live="polite"></span></div>
 </div>
+<div class="endbar"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button></div>
+</div>
 </section>
-<section class="ch" id="v5" data-n="5">
-<div class="vhead"><div class="vnum">5</div><h2>מה אנחנו מרגישים כשאנחנו מרגישים משקל?</h2></div>
+<section class="ch book" id="v5" data-n="5" role="dialog" aria-modal="true" aria-labelledby="v5-h" hidden style="--c:#7B4B2A;--cf:#FBF5ED">
+<div class="flap" aria-hidden="true"></div>
+<div class="bar-top"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button><span class="bk-tag">ספר 5</span></div>
+<div class="wrap">
+<div class="vhead rise"><div class="vnum">5</div><h2 id="v5-h">מה אנחנו מרגישים כשאנחנו מרגישים משקל?</h2></div>
 
-<div class="step gate">
+<ol class="trail rise" aria-label="השלבים בספר"><li data-st="gate" data-to="v5-s-gate"><button type="button"><i>1</i>ניחוש</button></li><li data-st="film" data-to="v5-s-film"><button type="button"><i>2</i>סרטון</button></li><li data-st="lab" data-to="v5-s-lab"><button type="button"><i>3</i>מעבדה</button></li><li data-st="q" data-to="v5-s-q"><button type="button"><i>4</i>שאלות</button></li><li data-st="r" data-to="v5-s-r"><button type="button"><i>5</i>מה השתנה</button></li></ol>
+<div class="name rise" hidden><label for="v5-who">השם שלי</label><input id="v5-who" class="who" type="text" maxlength="60" autocomplete="given-name"><span class="note">כדי שהתשובות יגיעו אליי.</span></div>
+<div class="rise"><div class="step gate" id="v5-s-gate">
 <h3><span class="sn">1</span>ניחוש</h3>
 <p class="qt" id="v5-gq">שני שעונים אטומיים זהים באותו חדר: אחד על הרצפה ואחד על מדף גבוה. מה נראה אחרי שנה?</p>
 <div class="opts" role="radiogroup" aria-labelledby="v5-gq"><label><input type="radio" name="v5-p" id="v5-p0" value="השעון העליון הקדים"><span>השעון העליון הקדים</span></label><label><input type="radio" name="v5-p" id="v5-p1" value="השעון התחתון הקדים"><span>השעון התחתון הקדים</span></label><label><input type="radio" name="v5-p" id="v5-p2" value="שניהם מראים בדיוק אותה שעה"><span>שניהם מראים בדיוק אותה שעה</span></label></div>
@@ -252,15 +394,15 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 <div class="bar"><button type="button" class="lock">נעל את הניחוש</button><span class="gate-msg status err" role="status" aria-live="polite"></span></div>
 <p class="note gate-hint">הניחוש לא מקבל ציון, וניחוש שגוי הוא חלק מהדרך. אחרי הנעילה אי אפשר לשנות אותו, והסרטון נפתח.</p>
 <p class="locked" hidden>הניחוש שלך ננעל: <b></b> <span class="status lock-status" role="status" aria-live="polite"></span></p>
-</div>
+</div></div>
 <div class="after" hidden>
-<div class="step"><h3><span class="sn">2</span>הסרטון</h3><video controls preload="metadata" playsinline src="films/film5.mp4"><track kind="subtitles" srclang="he" label="כתוביות בעברית" src="films/film5.vtt" default></video></div>
-<div class="step"><h3><span class="sn">3</span>המעבדה: מד הגובה</h3>
+<div class="step" id="v5-s-film"><h3><span class="sn">2</span>הסרטון</h3><video controls preload="metadata" playsinline src="films/film5.mp4"><track kind="subtitles" srclang="he" label="כתוביות בעברית" src="films/film5.vtt" default></video></div>
+<div class="step" id="v5-s-lab"><h3><span class="sn">3</span>המעבדה: מד הגובה</h3>
 <div class="labbox" data-lab="height"></div>
 <label class="qt" for="v5-lab">המטוסים של 1971 טסו בגובה של 9 ק״מ בערך, במשך כ־45 שעות. כמה תוספת זמן נותן הגובה לבדו? השווה ל־144 ול־179 מיליארדיות שנייה מהתחזית.</label><textarea id="v5-lab" data-k="lab" data-req="1" maxlength="1200"></textarea></div>
-<div class="step"><h3><span class="sn">4</span>השאלות</h3>
+<div class="step" id="v5-s-q"><h3><span class="sn">4</span>השאלות</h3>
 <ol class="qs"><li><span class="kind" data-k2="חישוב">חישוב</span><label class="qt" for="v5-q1">שעון שגבוה במטר אחד מקדים בכ־9.4 טריליוניות שנייה ביממה. בכמה יקדים שעון על פסגת האוורסט (8,849 מטר) אחרי שנה?</label><p class="note">כתוב גם איזו הנחה הנחת.</p><textarea id="v5-q1" data-k="q1" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="ניבוי">ניבוי</span><label class="qt" for="v5-q2">קרן אור חוצה חללית שמאיצה כלפי מעלה. איך ייראה המסלול שלה למי שבתוך החללית? ומה זה אומר על אור שעובר ליד מסה גדולה?</label><textarea id="v5-q2" data-k="q2" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="מצא את החור">מצא את החור</span><label class="qt" for="v5-q3">מישהו אומר: ״לאסטרונאוט בתחנה סגורה אין שום דרך לגלות שיש כבידה.״ מתי זה לא נכון?</label><p class="note">רמז: חזור לגאות מסרטון 2.</p><textarea id="v5-q3" data-k="q3" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="העברה">העברה</span><label class="qt" for="v5-q4">בסרטון 4 השעון שטס מערבה הקדים ב־273 מיליארדיות שנייה. התנועה לבדה חזתה 96. כמה נשאר לגובה? ולמה אצל המטוס שטס מזרחה שתי הסיבות פעלו בכיוונים הפוכים?</label><textarea id="v5-q4" data-k="q4" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="אתגר רשות">אתגר רשות</span><label class="qt" for="v5-x">אם אור מתעקם ליד מסה, מה אפשר ללמוד מתמונה של גלקסיה רחוקה שמופיעה כקשת?</label><textarea id="v5-x" data-k="x" maxlength="1200"></textarea></li></ol></div>
-<div class="step"><h3><span class="sn">5</span>מה השתנה אצלי</h3>
+<div class="step" id="v5-s-r"><h3><span class="sn">5</span>מה השתנה אצלי</h3>
 <p class="mine">לפני הסרטון ניחשת: <b></b>. <span class="why"></span></p>
 <label class="qt" for="v5-r">מה אתה חושב עכשיו? ומה גרם לך לשנות את דעתך, או להישאר איתה?</label>
 <textarea id="v5-r" data-k="r" data-req="1" maxlength="800" class="short"></textarea>
@@ -269,11 +411,18 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 </div>
 <div class="bar"><button type="button" class="submit">הגשתי את פרק 5</button><span class="status" role="status" aria-live="polite"></span></div>
 </div>
+<div class="endbar"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button></div>
+</div>
 </section>
-<section class="ch" id="v6" data-n="6">
-<div class="vhead"><div class="vnum">★</div><h2>משימת הסיום: כוון את שעון הלוויין</h2></div>
-<p class="intro">לוויין GPS מהיר, אז השעון שלו מפגר (סרטון 3). והוא גבוה, אז השעון שלו מקדים (סרטון 5). כאן אין סרטון. יש לך מעבדה, ואת כל מה שלמדת.</p>
-<div class="step gate">
+<section class="ch book" id="v6" data-n="6" role="dialog" aria-modal="true" aria-labelledby="v6-h" hidden style="--c:#1d3640;--cf:#E9C46A">
+<div class="flap" aria-hidden="true"></div>
+<div class="bar-top"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button><span class="bk-tag">ספר 6 · משימת הסיום</span></div>
+<div class="wrap">
+<div class="vhead rise"><div class="vnum">6</div><h2 id="v6-h">משימת הסיום: כוון את שעון הלוויין</h2></div>
+<p class="intro rise">לוויין GPS מהיר, אז השעון שלו מפגר (סרטון 3). והוא גבוה, אז השעון שלו מקדים (סרטון 5). כאן אין סרטון. יש לך מעבדה, ואת כל מה שלמדת.</p>
+<ol class="trail rise" aria-label="השלבים בספר"><li data-st="gate" data-to="v6-s-gate"><button type="button"><i>1</i>ניחוש</button></li><li data-st="lab" data-to="v6-s-lab"><button type="button"><i>2</i>מעבדה</button></li><li data-st="q" data-to="v6-s-q"><button type="button"><i>3</i>משימות</button></li><li data-st="r" data-to="v6-s-r"><button type="button"><i>4</i>מה השתנה</button></li></ol>
+<div class="name rise" hidden><label for="v6-who">השם שלי</label><input id="v6-who" class="who" type="text" maxlength="60" autocomplete="given-name"><span class="note">כדי שהתשובות יגיעו אליי.</span></div>
+<div class="rise"><div class="step gate" id="v6-s-gate">
 <h3><span class="sn">1</span>ניחוש</h3>
 <p class="qt" id="v6-gq">לפני שנוגעים במעבדה: בגובה של לוויין GPS, מה מנצח?</p>
 <div class="opts" role="radiogroup" aria-labelledby="v6-gq"><label><input type="radio" name="v6-p" id="v6-p0" value="התנועה: השעון מפגר"><span>התנועה: השעון מפגר</span></label><label><input type="radio" name="v6-p" id="v6-p1" value="הגובה: השעון מקדים"><span>הגובה: השעון מקדים</span></label><label><input type="radio" name="v6-p" id="v6-p2" value="הן מתבטלות בדיוק"><span>הן מתבטלות בדיוק</span></label></div>
@@ -282,15 +431,15 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 <div class="bar"><button type="button" class="lock">נעל את הניחוש</button><span class="gate-msg status err" role="status" aria-live="polite"></span></div>
 <p class="note gate-hint">הניחוש לא מקבל ציון, וניחוש שגוי הוא חלק מהדרך. אחרי הנעילה אי אפשר לשנות אותו.</p>
 <p class="locked" hidden>הניחוש שלך ננעל: <b></b> <span class="status lock-status" role="status" aria-live="polite"></span></p>
-</div>
+</div></div>
 <div class="after" hidden>
 
-<div class="step"><h3><span class="sn">2</span>המעבדה: שעון הלוויין</h3>
+<div class="step" id="v6-s-lab"><h3><span class="sn">2</span>המעבדה: שעון הלוויין</h3>
 <div class="labbox" data-lab="gps"></div>
 </div>
-<div class="step"><h3><span class="sn">3</span>המשימות</h3>
+<div class="step" id="v6-s-q"><h3><span class="sn">3</span>המשימות</h3>
 <ol class="qs"><li><span class="kind" data-k2="חקירה">חקירה</span><label class="qt" for="v6-q1">מצא במעבדה את הגובה שבו שתי ההשפעות מתבטלות. מה הגובה? ומה קורה לשעון מתחת לגובה הזה ומעליו?</label><textarea id="v6-q1" data-k="q1" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="חישוב">חישוב</span><label class="qt" for="v6-q2">בגובה של GPS: בכמה מיקרושניות השעון מקדים ביממה? אות הלוויין נע במהירות האור, כ־300,000 ק״מ בשנייה. איזו טעות במיקום נוצרת ביממה אחת בלי תיקון? הראה את החישוב.</label><textarea id="v6-q2" data-k="q2" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="הסבר">הסבר</span><label class="qt" for="v6-q3">בתחנת החלל הסימן הפוך. הסבר למה, במילים של סרטון 3 ושל סרטון 5.</label><textarea id="v6-q3" data-k="q3" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="החלטה אמיתית">החלטה אמיתית</span><label class="qt" for="v6-q4">ב־1977 שוגר לוויין הניסוי NTS-2. חלק מהמהנדסים לא היו בטוחים שהיחסות באמת תשפיע על השעון, ולכן בנו מתג שמפעיל את התיקון רק אם צריך. איזו מדידה היית מבקש לראות לפני שמפעילים את המתג?</label><textarea id="v6-q4" data-k="q4" data-req="1" maxlength="1200"></textarea></li><li><span class="kind" data-k2="התשובה שלך">התשובה שלך</span><label class="qt" for="v6-q5">מי שולט בזמן? כתוב תשובה משלך. השתמש לפחות בשלוש מחמש הסיבות שאספנו: הגדרה מול טבע, הירח, תנועה, מסלול, גובה.</label><textarea id="v6-q5" data-k="q5" data-req="1" maxlength="1200"></textarea></li></ol></div>
-<div class="step"><h3><span class="sn">4</span>מה השתנה אצלי</h3>
+<div class="step" id="v6-s-r"><h3><span class="sn">4</span>מה השתנה אצלי</h3>
 <p class="mine">לפני המעבדה ניחשת: <b></b>. <span class="why"></span></p>
 <label class="qt" for="v6-r">מה אתה חושב עכשיו? ומה גרם לך לשנות את דעתך, או להישאר איתה?</label>
 <textarea id="v6-r" data-k="r" data-req="1" maxlength="800" class="short"></textarea>
@@ -299,9 +448,9 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
 </div>
 <div class="bar"><button type="button" class="submit">הגשתי את משימת הסיום</button><span class="status" role="status" aria-live="polite"></span></div>
 </div>
-</section>
-<footer>התשובות נשלחות רק למורה. אפשר לחזור ולתקן תשובה גם אחרי ההגשה, ואז ללחוץ שוב ״הגשתי״. את הניחוש אי אפשר לשנות אחרי שננעל.</footer>
+<div class="endbar"><button type="button" class="back"><svg viewBox="0 0 18 10" aria-hidden="true"><path d="M13 1l4 4-4 4M17 5H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>חזרה למדף</span></button></div>
 </div>
+</section>
 <script>window.ASTRO_CFG = {"url":"https://swfgkaesxhixrmvfmofx.supabase.co","key":"sb_publishable_vVNMWTtYYGnwBwFKKPjbPQ_DVVtUjyG"};</script>
 <script>/* Six small labs for the student site. window.LABS[id](root) builds one lab inside root.
    Every lab is a simplified model and says so on screen. Physics constants: GM (Earth), c, R (Earth radius). */
@@ -526,7 +675,7 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
   window.LABS = LABS;
 })();
 </script>
-<script>/* Student site logic. Each chapter: locked guess -> film -> lab -> questions -> what changed. Everything is saved in the
+<script>/* Student site logic. Each book (chapter): locked guess -> film -> lab -> questions -> what changed. Everything is saved in the
    browser while typing and sent to the teacher's database (insert only). window.ASTRO_CFG is injected by build-site.mjs. */
 (function () {
   var CFG = window.ASTRO_CFG;
@@ -534,15 +683,19 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
     get: function (k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
     set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   };
-  var who = document.getElementById('who');
-  who.value = store.get('astro:name') || '';
-  who.addEventListener('input', function () { store.set('astro:name', who.value.trim()); });
+  // one name, typed on the shelf or inside any book; every name field shows the same value
+  var whos = [].slice.call(document.querySelectorAll('input.who'));
+  var name = function () { return (store.get('astro:name') || '').trim(); };
+  whos.forEach(function (w) {
+    w.value = store.get('astro:name') || '';
+    w.addEventListener('input', function () { store.set('astro:name', w.value.trim()); whos.forEach(function (o) { if (o !== w) o.value = w.value; }); });
+  });
   function hhmm() { return new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }); }
   function send(n, answers, final) {
     return fetch(CFG.url + '/rest/v1/astro_answers', {
       method: 'POST',
       headers: { apikey: CFG.key, Authorization: 'Bearer ' + CFG.key, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-      body: JSON.stringify({ student: who.value.trim(), video: n, answers: answers, final: final })
+      body: JSON.stringify({ student: name(), video: n, answers: answers, final: final })
     }).then(function (res) { if (!res.ok) throw new Error(res.status); });
   }
 
@@ -553,7 +706,7 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
     var optC = [].slice.call(sec.querySelectorAll('input[name="v' + n + '-c"]'));
     var st = sec.querySelector('.after .bar .status') || sec.querySelector('.lock-status'), btn = sec.querySelector('.submit'), lockBtn = sec.querySelector('.lock');
     var gateMsg = sec.querySelector('.gate-msg'), after = sec.querySelector('.after'), lockedP = sec.querySelector('.locked');
-    var chip = document.querySelector('nav.prog a[data-n="' + n + '"]');
+    var trail = [].slice.call(sec.querySelectorAll('.trail li')), video = sec.querySelector('video');
     var saved = store.get(key) || {};
     saved.a = saved.a || {}; saved.sent = saved.sent || ''; saved.done = !!saved.done; saved.locked = !!saved.locked;
     fields.forEach(function (f) { f.value = saved.a[f.dataset.k] || ''; });
@@ -571,8 +724,14 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
     function paint() {
       var any = saved.locked || fields.some(function (f) { return f.value.trim(); });
       var s = saved.done ? 'done' : any ? 'draft' : '';
-      chip.dataset.s = s; chip.querySelector('span').textContent = s === 'done' ? 'הוגש' : s === 'draft' ? 'בתהליך' : 'לא התחלתי';
       if (btn) btn.classList.toggle('done', saved.done);
+      // the steps strip at the top of the book: done steps get a tick, the next one is marked
+      var filled = function (sel) { return [].slice.call(sec.querySelectorAll(sel)).every(function (f) { return f.value.trim(); }); };
+      var ok = { gate: saved.locked, film: !!saved.seen, lab: saved.locked && filled('[data-k="lab"]'), q: saved.locked && filled('ol.qs [data-req]'),
+        r: saved.locked && filled('[data-k="r"]') && optC.some(function (o) { return o.checked; }) };
+      var now = false;
+      trail.forEach(function (li) { var d = ok[li.dataset.st]; li.dataset.s = d ? 'done' : !now ? (now = true, 'now') : ''; });
+      window.dispatchEvent(new CustomEvent('astro:state', { detail: { n: n, s: s } }));
     }
     function unlock() {
       optP.forEach(function (o) { o.disabled = true; });
@@ -588,7 +747,12 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
     var busy = false;
     function push(final) {
       var a = collect(), sig = JSON.stringify(a);
-      if (!who.value.trim()) { say('כדי לשלוח, כתוב את השם שלך למעלה. התשובות שמורות במחשב.', true); if (final) who.focus(); return; }
+      if (!name()) {
+        var nm = sec.querySelector('.name'); if (nm) nm.hidden = false;
+        say('כדי לשלוח, כתוב את השם שלך בראש הספר. התשובות שמורות במחשב.', true);
+        if (final && nm) nm.querySelector('input').focus();
+        return;
+      }
       if (!final && sig === saved.sent) return;
       if (busy) return; busy = true;
       send(n, a, !!final).then(function () {
@@ -618,9 +782,227 @@ input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
         armed = 0; push(true);
       });
     }
+    // the film counts as watched once 90% of it has played
+    if (video) video.addEventListener('timeupdate', function () {
+      if (!saved.seen && video.duration && video.currentTime / video.duration > 0.9) { saved.seen = true; store.set(key, saved); paint(); }
+    });
+    trail.forEach(function (li) {
+      li.querySelector('button').addEventListener('click', function () {
+        var el = document.getElementById(li.dataset.to); if (!el) return;
+        if (el.closest('[hidden]')) { gateMsg.textContent = 'קודם נועלים את הניחוש. אחר כך כל השאר נפתח.'; var g = sec.querySelector('.gate'); g.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
     if (saved.locked) unlock();
     paint();
   });
+})();
+</script>
+<script>/* The bookshelf: six books stand in order (book 1 on the right, as Hebrew reads). The active book turns in 3D so its cover
+   faces the reader, like the Shelf Hero from MotionSites (the same shelf as the Worlds app). Clicking the cover grows a sheet
+   out of it into the book page. Placement: x = -F(r), F(r) = r(ws+gap) + (d-ws+1.6gap)B(r), B(r) = (r + sin(pi r)/pi)/2. */
+(function () {
+  var N = document.querySelectorAll('.bk').length;
+  var shelf = document.getElementById('shelf'), stage = shelf.querySelector('.stage'), probe = document.getElementById('probe');
+  var books = [].slice.call(stage.querySelectorAll('.bk')), pages = books.map(function (b) { return document.getElementById('v' + b.dataset.n); });
+  var endR = stage.querySelector('.end-r'), endL = stage.querySelector('.end-l');
+  var view = document.getElementById('shelfview'), openBtn = document.getElementById('openBtn');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var EASE = 'cubic-bezier(.76,0,.18,1)';
+  var H = 300, ws = 60, d = 200, gap = 10, endW = 14;
+  var store = function (k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } };
+
+  function measure() {
+    H = probe.getBoundingClientRect().height || 300; ws = H * 0.2; d = H * 0.66; gap = H * 0.035; endW = H * 0.06;
+    stage.style.setProperty('--H', H + 'px'); stage.style.setProperty('--ws', ws + 'px'); stage.style.setProperty('--d', d + 'px');
+  }
+  var B = function (r) { return Math.abs(r) < 1 ? (r + Math.sin(Math.PI * r) / Math.PI) / 2 : (r > 0 ? 0.5 : -0.5); };
+  var X = function (r) { return -(r * (ws + gap) + (d - ws + 1.6 * gap) * B(r)); };
+  var sm = function (x) { return x * x * (3 - 2 * x); };
+  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
+
+  // state of each book, from what app.js keeps in the browser
+  function stateOf(n) {
+    var s = store('astro:v' + n);
+    if (!s) return '';
+    if (s.done) return 'done';
+    var any = s.locked || (s.a && Object.keys(s.a).some(function (k) { return String(s.a[k] || '').trim(); }));
+    return any ? 'draft' : '';
+  }
+  var STATE_TXT = { done: 'הוגש ✓  אפשר לפתוח ולתקן', draft: 'בתהליך: התשובות שלך שמורות', '': 'עוד לא התחלתי' };
+  function paintStates() { books.forEach(function (b) { b.dataset.s = stateOf(+b.dataset.n); }); }
+
+  // start on book 1; on a later visit, on the first book that is not handed in yet
+  var start = 0;
+  for (var i = 0; i < N; i++) { if (stateOf(i + 1) !== 'done') { start = i; break; } if (i === N - 1) start = 0; }
+  var s = start, T = start, last = 0, isOpen = -1, running = false;
+  var hover = -1, lifts = books.map(function () { return 0; });
+  var mx = innerWidth / 2, my = innerHeight / 2, tiltX = 0, tiltY = 0;
+
+  // caption: each line slides through its own mask when the book changes
+  var masks = { kick: document.querySelector('.m-kick'), title: document.querySelector('.m-title'), state: document.querySelector('.m-state') };
+  var shown = -1;
+  function swap(el, text, dir) {
+    var span = document.createElement('span'); span.textContent = text;
+    var old = [].slice.call(el.children).filter(function (c) { return !c.dataset.out; });
+    el.appendChild(span);
+    if (reduce || dir === 0) { old.forEach(function (o) { o.remove(); }); return; }
+    span.animate([{ transform: 'translateY(' + dir * 105 + '%)' }, { transform: 'none' }], { duration: 650, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' });
+    old.forEach(function (o) {
+      o.dataset.out = '1';
+      o.animate([{ transform: getComputedStyle(o).transform === 'none' ? 'none' : getComputedStyle(o).transform }, { transform: 'translateY(' + -dir * 105 + '%)' }], { duration: 650, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }).onfinish = function () { o.remove(); };
+    });
+  }
+  function caption(i, dir) {
+    var b = books[i];
+    swap(masks.kick, b.dataset.kick, dir); swap(masks.title, b.dataset.title, dir); swap(masks.state, STATE_TXT[b.dataset.s || ''], dir);
+    openBtn.textContent = (b.dataset.s === 'done' ? 'לפתוח שוב את ספר ' : 'לפתוח את ספר ') + b.dataset.n;
+    books.forEach(function (bk, k) { bk.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    shown = i;
+  }
+
+  function frame(t) {
+    var dt = Math.min(0.05, last ? (t - last) / 1000 : 0.016); last = t;
+    var k = reduce ? 60 : dragging ? 18 : 5.2;
+    s += (T - s) * (1 - Math.exp(-k * dt)); if (Math.abs(T - s) < 1e-4) s = T;
+    // where each book stands, then shift the whole row so it sits centred, while the open book stays fully on screen
+    var xs = [], os = [], wsz = [];
+    books.forEach(function (b, i) {
+      var r = i - s, o = sm(Math.max(0, 1 - Math.abs(r))), th = o * Math.PI / 2;
+      xs[i] = X(r); os[i] = o; wsz[i] = ws * Math.cos(th) + d * Math.sin(th);
+    });
+    var right = xs[0] + wsz[0] / 2 + gap + endW, left = xs[N - 1] - wsz[N - 1] / 2 - gap - endW;
+    var off = -(right + left) / 2, half = innerWidth / 2 - 14;
+    var a0 = clamp(Math.round(s), 0, N - 1), ax = xs[a0], aw = wsz[a0] / 2 + d * 0.12;
+    off = clamp(off, -half + aw - ax, half - aw - ax);
+    var cx = innerWidth / 2 + ax + off, cy = shelf.getBoundingClientRect().top + shelf.offsetHeight / 2;
+    var onCover = Math.abs(mx - cx) < 0.55 * d && Math.abs(my - cy) < 0.55 * H && Math.abs(T - s) < 0.3;
+    var tY = onCover ? -(mx - cx) / (0.55 * d) * 8 : -(mx - innerWidth / 2) / innerWidth * 4, tX = onCover ? -(my - cy) / (H / 2) * 5 : 0;
+    var e7 = 1 - Math.exp(-7 * dt); tiltY += (tY - tiltY) * e7; tiltX += (tX - tiltX) * e7;
+    books.forEach(function (b, i) {
+      var r = i - s, o = os[i];
+      lifts[i] += ((hover === i && Math.abs(r) > 0.5 ? 1 : 0) - lifts[i]) * (reduce ? 1 : 1 - Math.exp(-12 * dt));
+      var x = xs[i] + off, y = -o * 0.03 * H - lifts[i] * 0.05 * H, z = o * 0.2 * H;
+      var ry = 90 * o + tiltY * o, rx = tiltX * o, rz = 3.5 * o;
+      b.style.transform = 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,' + z.toFixed(2) + 'px) rotateZ(' + rz.toFixed(2) + 'deg) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+      b.style.zIndex = Math.round(100 - Math.abs(r) * 4);
+      b.style.setProperty('--shs', (o * 0.5).toFixed(3)); b.style.setProperty('--shc', ((1 - o) * 0.5).toFixed(3));
+    });
+    // two bookends hold the row
+    endR.style.transform = 'translate3d(' + (right - endW / 2 + off).toFixed(2) + 'px,0,0)';
+    endL.style.transform = 'translate3d(' + (left + endW / 2 + off).toFixed(2) + 'px,0,0)';
+    var a = clamp(Math.round(s), 0, N - 1);
+    if (a !== shown) caption(a, shown < 0 ? 0 : (a > shown ? 1 : -1));
+    var settled = Math.abs(T - s) < 0.02;
+    openBtn.classList.toggle('dim', !settled);
+    if (isOpen < 0) requestAnimationFrame(frame); else running = false;
+  }
+  function run() { if (!running) { running = true; last = 0; requestAnimationFrame(frame); } }
+
+  function go(i) { T = clamp(Math.round(i), 0, N - 1); }
+
+  // pointer: click a spine to bring it to the middle, click the open cover to open; drag to slide the shelf
+  var down = null, dragging = false, moved = false;
+  shelf.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0 || isOpen >= 0) return;
+    down = { x: e.clientX, T: T, target: e.target.closest('.bk') }; moved = false;
+  });
+  window.addEventListener('pointermove', function (e) {
+    mx = e.clientX; my = e.clientY;
+    if (!down) return;
+    var dx = e.clientX - down.x;
+    if (!moved && Math.abs(dx) > 6) { moved = true; dragging = true; shelf.classList.add('grab'); }
+    if (moved) T = clamp(down.T + dx / (ws + gap), -0.35, N - 0.65);
+  });
+  window.addEventListener('pointerup', function () {
+    if (!down) return;
+    var tgt = down.target; down = null;
+    if (moved) { dragging = false; shelf.classList.remove('grab'); go(T); return; }
+    if (tgt) activate(+tgt.dataset.n - 1);
+  });
+  window.addEventListener('pointercancel', function () { if (down && moved) go(T); down = null; dragging = false; shelf.classList.remove('grab'); });
+  books.forEach(function (b, i) {
+    b.addEventListener('pointerenter', function () { hover = i; });
+    b.addEventListener('pointerleave', function () { if (hover === i) hover = -1; });
+    b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(i); } });
+    b.addEventListener('focus', function () { if (isOpen < 0) go(i); });
+  });
+  function activate(i) { if (Math.abs(i - s) < 0.5 && Math.abs(T - s) < 0.3) open(i); else go(i); }
+
+  // wheel over the shelf: either axis; snap to a book after a short pause
+  var wt = 0;
+  shelf.addEventListener('wheel', function (e) {
+    if (isOpen >= 0) return;
+    var dl = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? -e.deltaX : e.deltaY;
+    if (!dl) return; e.preventDefault();
+    T = clamp(T + dl / (ws + gap) * 0.5, -0.3, N - 0.7);
+    clearTimeout(wt); wt = setTimeout(function () { go(T); }, 160);
+  }, { passive: false });
+
+  document.getElementById('prevBtn').addEventListener('click', function () { go(Math.round(T) - 1); });
+  document.getElementById('nextBtn').addEventListener('click', function () { go(Math.round(T) + 1); });
+  openBtn.addEventListener('click', function () { var a = clamp(Math.round(T), 0, N - 1); if (Math.abs(T - s) > 0.02) { s = T = a; } open(a); });
+  document.addEventListener('keydown', function (e) {
+    if (isOpen >= 0) { if (e.key === 'Escape') back(); return; }
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(Math.round(T) + 1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); go(Math.round(T) - 1); }
+    else if (e.key === 'Enter' && (e.target === document.body || e.target === openBtn)) { if (e.target === document.body) { e.preventDefault(); openBtn.click(); } }
+  });
+
+  // opening: a sheet in the book's colour grows out of the cover, straightens and fills the screen, then turns to paper
+  function coverRect(i) { return books[i].querySelector('.cv').getBoundingClientRect(); }
+  function inset(r) { return 'inset(' + r.top + 'px ' + (innerWidth - r.right) + 'px ' + (innerHeight - r.bottom) + 'px ' + r.left + 'px round 6px)'; }
+  function open(i, instant) {
+    if (isOpen >= 0 || !pages[i]) return;
+    var page = pages[i], r = coverRect(i), flap = page.querySelector('.flap');
+    isOpen = i; page.hidden = false; page.scrollTop = 0;
+    var nm = page.querySelector('.name'); if (nm) nm.hidden = !!(store('astro:name') || '').trim();
+    if (!history.state || history.state.book !== i + 1) history.pushState({ book: i + 1 }, '', '#v' + (i + 1));
+    var done = function () { view.setAttribute('aria-hidden', 'true'); document.body.classList.add('reading'); page.querySelector('.back').focus({ preventScroll: true }); };
+    if (instant || reduce) { done(); return; }
+    page.style.transformOrigin = ((r.left + r.right) / 2) + 'px ' + ((r.top + r.bottom) / 2) + 'px';
+    page.animate([{ clipPath: inset(r), transform: 'rotate(3.5deg)' }, { clipPath: 'inset(0px 0px 0px 0px round 0px)', transform: 'none' }], { duration: 950, easing: EASE });
+    flap.animate([{ opacity: 1 }, { opacity: 1, offset: 0.55 }, { opacity: 0 }], { duration: 1250, easing: 'ease-out', fill: 'forwards' });
+    [].slice.call(page.querySelectorAll('.rise')).forEach(function (el, k) {
+      el.animate([{ transform: 'translateY(28px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 700, delay: 520 + k * 80, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' });
+    });
+    setTimeout(done, 960);
+  }
+  function close() {
+    if (isOpen < 0) return;
+    var i = isOpen, page = pages[i];
+    [].forEach.call(page.querySelectorAll('video'), function (v) { try { v.pause(); } catch (e) {} });
+    paintStates();
+    view.removeAttribute('aria-hidden'); document.body.classList.remove('reading');
+    s = T = i; isOpen = -1; shown = -1; run();
+    var finish = function () { page.hidden = true; page.getAnimations().forEach(function (a) { a.cancel(); }); books[i].focus({ preventScroll: true }); };
+    if (reduce) { finish(); return; }
+    requestAnimationFrame(function () {
+      var r = coverRect(i);
+      page.style.transformOrigin = ((r.left + r.right) / 2) + 'px ' + ((r.top + r.bottom) / 2) + 'px';
+      page.querySelector('.flap').animate([{ opacity: 0 }, { opacity: 1, offset: 0.45 }, { opacity: 1 }], { duration: 800, fill: 'forwards' });
+      page.animate([{ clipPath: 'inset(0px 0px 0px 0px round 0px)', transform: 'none' }, { clipPath: inset(r), transform: 'rotate(3.5deg)' }], { duration: 800, easing: EASE, fill: 'forwards' }).onfinish = finish;
+    });
+  }
+  // the back buttons and the phone's back gesture both return to the shelf
+  function back() { if (history.state && history.state.book) history.back(); else close(); }
+  [].forEach.call(document.querySelectorAll('.book .back'), function (b) { b.addEventListener('click', back); });
+  window.addEventListener('popstate', function (e) {
+    var want = e.state && e.state.book ? e.state.book - 1 : -1;
+    if (want < 0 && isOpen >= 0) close();
+    else if (want >= 0 && isOpen < 0) { s = T = want; frame(performance.now()); open(want, true); }
+  });
+
+  measure(); paintStates();
+  window.addEventListener('resize', measure);
+  window.addEventListener('astro:state', paintStates);
+  var m = /^#v(\d)$/.exec(location.hash), deep = m ? +m[1] - 1 : -1;
+  if (deep >= 0 && deep < N) {
+    history.replaceState({ shelf: 1 }, '', location.pathname + location.search);
+    s = T = deep; frame(performance.now()); open(deep, true);
+  } else { history.replaceState({ shelf: 1 }, '', location.pathname + location.search); run(); }
 })();
 </script>
 </body></html>
